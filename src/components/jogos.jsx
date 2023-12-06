@@ -100,7 +100,7 @@ class Jogos extends React.Component {
       Odds somadas: ${somaOdds.toFixed(2)}
     `;
   
-    const numeroWhatsApp = '5512991713231'; // Seu número de telefone no formato internacional
+    const numeroWhatsApp = '5511997021961'; // Seu número de telefone no formato internacional
     const mensagemEncoded = encodeURIComponent(mensagem);
     const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensagemEncoded}`;
   
