@@ -12,6 +12,7 @@ class Jogos extends React.Component {
     apostas: [],
     opcaoSelecionada: null,
     somaOdds: 0,
+    timeSelecionado: {},
   };
 
   handleChange = event => {
@@ -21,9 +22,12 @@ class Jogos extends React.Component {
 
   handleSelecionarVencedor = (jogoId, vencedor, odds) => {
     this.setState(prevState => {
-      const { apostas } = prevState;
+      const { apostas, timeSelecionado } = prevState;
       
       const existenteIndex = apostas.findIndex(aposta => aposta.jogoId === jogoId);
+  
+      const novoTimeSelecionado = { ...timeSelecionado };
+      novoTimeSelecionado[jogoId] = vencedor; // Atualiza o timeSelecionado para o jogoId com o vencedor selecionado
   
       const jogoCorrespondente = prevState.jogos.find(jogo => jogo.id === jogoId);
       const { time1, time2 } = jogoCorrespondente || {}; // Se não encontrar o jogo, define vazio para evitar erros
@@ -37,10 +41,11 @@ class Jogos extends React.Component {
         apostaExistente.time2 = time2; // Adiciona time2 na aposta
   
         const novaSomaOdds = novasApostas.reduce((acc, aposta) => acc + aposta.odds, 0);
-        
+  
         return {
           apostas: novasApostas,
           somaOdds: novaSomaOdds,
+          timeSelecionado: novoTimeSelecionado, // Atualiza o estado timeSelecionado
         };
       } else {
         const novaAposta = { jogoId, vencedor, odds, time1, time2 }; // Cria uma nova aposta com time1 e time2
@@ -50,6 +55,7 @@ class Jogos extends React.Component {
         return {
           apostas: novasApostas,
           somaOdds: novaSomaOdds,
+          timeSelecionado: novoTimeSelecionado, // Atualiza o estado timeSelecionado
         };
       }
     });
@@ -120,28 +126,28 @@ class Jogos extends React.Component {
   });
     return (
       <div className='pagina-apostas'>
-        <h1>Jogos - 06/07/08 - Dezembro</h1>
+        <h1>Jogos - Sábado 02/dez</h1>
         {this.state.jogos.map(jogo => (
-          <div key={jogo.id} className='jogo'>
-            <p>jogo {jogo.id}</p>
-            <div className='times-empate'>
-              <div className='time'>
-                <button onClick={() => this.handleSelecionarVencedor(jogo.id, jogo.time1, jogo.odds1)}>
-                  <img src={jogo.logo1} alt={`${jogo.time1} Logo`} />
-                </button>
-                <p>{jogo.time1}</p>
-                <p>Odds: {jogo.odds1.toFixed(2)}</p>
+        <div key={jogo.id} className='jogo'>
+          <p>jogo {jogo.id}</p>
+          <div className='times-empate'>
+            <div className={`time ${this.state.timeSelecionado[jogo.id] === jogo.time1 ? 'selecionado' : ''}`}>
+              <button onClick={() => this.handleSelecionarVencedor(jogo.id, jogo.time1, jogo.odds1)}>
+              <img src={jogo.logo1} alt={`${jogo.time1} Logo`} />
+              </button>
+              <p>{jogo.time1}</p>
+              <p>Odds: {jogo.odds1.toFixed(2)}</p>
               </div>
-              <div className='empate'>
-                <button onClick={() => this.handleSelecionarVencedor(jogo.id, 'Empate', jogo.oddsEmpate)}>
-                  <img src={empateImg} alt="Empate" />
-                </button>
-                <p>Empate</p>
-                <p>Odds: {jogo.oddsEmpate.toFixed(2)}</p>
-              </div>
-              <div className='time'>
-                <button onClick={() => this.handleSelecionarVencedor(jogo.id, jogo.time2, jogo.odds2)}>
-                  <img src={jogo.logo2} alt={`${jogo.time2} Logo`} />
+              <div className={`empate ${this.state.timeSelecionado[jogo.id] === 'Empate' ? 'selecionado' : ''}`}>
+              <button onClick={() => this.handleSelecionarVencedor(jogo.id, 'Empate', jogo.oddsEmpate)}>
+                <img src={empateImg} alt="Empate" />
+              </button>
+              <p>Empate</p>
+              <p>Odds: {jogo.oddsEmpate.toFixed(2)}</p>
+            </div>
+            <div className={`time ${this.state.timeSelecionado[jogo.id] === jogo.time2 ? 'selecionado' : ''}`}>
+              <button onClick={() => this.handleSelecionarVencedor(jogo.id, jogo.time2, jogo.odds2)}>
+               <img src={jogo.logo2} alt={`${jogo.time2} Logo`} />
                 </button>
                 <p>{jogo.time2}</p>
                 <p>Odds: {jogo.odds2.toFixed(2)}</p>
