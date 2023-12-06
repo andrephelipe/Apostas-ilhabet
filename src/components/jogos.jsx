@@ -10,6 +10,7 @@ class Jogos extends React.Component {
     valorAposta: '',
     jogos: jogosData,
     apostas: [],
+    opcaoSelecionada: null,
     somaOdds: 0,
   };
 
@@ -119,7 +120,7 @@ class Jogos extends React.Component {
   });
     return (
       <div className='pagina-apostas'>
-        <h1>Jogos - Sábado 02/dez</h1>
+        <h1>Jogos - 06/07/08 - Dezembro</h1>
         {this.state.jogos.map(jogo => (
           <div key={jogo.id} className='jogo'>
             <p>jogo {jogo.id}</p>

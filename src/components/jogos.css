@@ -98,3 +98,8 @@ h1 {
 div p {
   color: #fff;
 }
+
+.selecionado {
+  border: 3px solid #ffd700; /* Adiciona uma borda amarela ao redor da imagem selecionada */
+  /* Outros estilos para destacar a imagem do time selecionado */
+}
