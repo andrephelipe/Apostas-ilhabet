@@ -126,7 +126,7 @@ class Jogos extends React.Component {
   });
     return (
       <div className='pagina-apostas'>
-        <h1>Jogos - Quinta e Sexta 07 e 08/dez</h1>
+        <h1>Jogos - Sexta 08/dez</h1>
         {this.state.jogos.map(jogo => (
         <div key={jogo.id} className='jogo'>
           <p>jogo {jogo.id}</p>
